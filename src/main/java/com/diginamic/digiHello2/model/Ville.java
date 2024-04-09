@@ -1,13 +1,16 @@
 package com.diginamic.digiHello2.model;
 
 public class Ville {
+	
+	private int id;
 	/** nom de la ville */
 	private String nom;
 	/** population totale */
 	private int population;
 	
-	public Ville(String nom, int population) {
+	public Ville(int id,String nom, int population) {
 		super();
+		this.id = id;
 		this.nom = nom;
 		this.population = population;
 	}
@@ -26,6 +29,14 @@ public class Ville {
 
 	public void setPopulation(int population) {
 		this.population = population;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
