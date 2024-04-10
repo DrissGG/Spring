@@ -15,5 +15,6 @@ public class DigiHello2Application {
 		SpringApplication.run(DigiHello2Application.class, args);
 		
 	}
+	
 
 }

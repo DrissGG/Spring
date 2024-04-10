@@ -1,13 +1,24 @@
 package com.diginamic.digiHello2.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Ville {
-	
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	/** nom de la ville */
 	private String nom;
 	/** population totale */
 	private int population;
 	
+	public Ville() {
+		super();
+	}	
 	public Ville(int id,String nom, int population) {
 		super();
 		this.id = id;
