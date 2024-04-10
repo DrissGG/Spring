@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.diginamic.digiHello2.controleurs.VilleControleur;
 import com.diginamic.digiHello2.model.Ville;
+import com.diginamic.digiHello2.repository.VilleRepository;
 
 @Service
 public class VilleService {

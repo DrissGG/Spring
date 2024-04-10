@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Ville {
@@ -15,15 +17,23 @@ public class Ville {
 	private String nom;
 	/** population totale */
 	private int population;
+	  
+	private String codeDepartement;
+	@ManyToOne
+	@JoinColumn(name = "departement_id")
+	private Departement departement;
 	
 	public Ville() {
 		super();
 	}	
-	public Ville(int id,String nom, int population) {
+	
+
+	public Ville(int id, String nom, int population, String codeDepartement) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.population = population;
+		this.codeDepartement = codeDepartement;
 	}
 
 	public String getNom() {
@@ -48,6 +58,22 @@ public class Ville {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+	public String getCodeDepartement() {
+		return codeDepartement;
+	}
+	public void setCodeDepartement(String codeDepartement) {
+		this.codeDepartement = codeDepartement;
+	}
+
+
+	public Departement getDepartement() {
+		return departement;
+	}
+
+
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 
 }

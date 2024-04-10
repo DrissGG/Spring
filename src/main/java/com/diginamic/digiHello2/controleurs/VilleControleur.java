@@ -4,27 +4,28 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diginamic.digiHello2.model.Ville;
+import com.diginamic.digiHello2.repository.VilleRepository;
 import com.diginamic.digiHello2.service.VilleService;
 
 @RestController
+@RequestMapping("/villes")
 public class VilleControleur {
 
 	@Autowired
 	private VilleService villeService;
-
+	@Autowired
+    private VilleRepository villeRepository;
 	
 	@GetMapping("/villes")
 	public List<Ville> getVilles() {			
-		return villeService.extractVilles();		
+		//return villeService.extractVilles();		
+		return villeRepository.findAll();
 	}
 	
 	@GetMapping("/villes/{id}")
@@ -36,36 +37,40 @@ public class VilleControleur {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	 @PostMapping("/villes")
-	    public ResponseEntity<String> insertVille(@RequestBody Ville nvVille) {
-	        Ville villeExistante = villeService.extractVille(nvVille.getNom());
-	        if (villeExistante != null) {
-	            return ResponseEntity.badRequest().body("La ville existe déjà");
-	        } else {
-	            villeService.insertVille(nvVille);
-	            return ResponseEntity.ok("La ville a été insérée !");
-	        }
+	 
+	 @GetMapping("/nom/{nom}")
+	 public List<Ville> getVillesByNom(@PathVariable String nom) {
+		 return villeRepository.findByNomStartingWith(nom);
+	 }
+	 
+	 @GetMapping("/population/{min}")
+	 public List<Ville> getVillesByPopulationGreaterThan(@PathVariable int min) {
+		 return villeRepository.findByPopulationGreaterThan(min);
+	 }
+	 
+	 @GetMapping("/population/{min}/{max}")
+	    public List<Ville> getVillesByPopulationRange(@PathVariable int min, @PathVariable int max) {
+	        return villeRepository.findByPopulationBetween(min, max);
 	    }
 
-	    @PutMapping("/villes/{id}")
-	    public ResponseEntity<String> updateVille(@PathVariable int id, @RequestBody Ville villeModifiee) {
-	        Ville ville = villeService.extractVille(id);
-	        if (ville != null) {
-	            villeService.modifierVille(id, villeModifiee);
-	            return ResponseEntity.ok("La ville a été modifiée !");
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
+	    @GetMapping("/departement/{codeDepartement}")
+	    public List<Ville> getVillesByDepartement(@PathVariable String codeDepartement) {
+	        return villeRepository.findByCodeDepartement(codeDepartement);
 	    }
 
-	    @DeleteMapping("/villes/{id}")
-	    public ResponseEntity<String> deleteVille(@PathVariable int id) {
-	        Ville ville = villeService.extractVille(id);
-	        if (ville != null) {
-	            villeService.supprimerVille(id);
-	            return ResponseEntity.ok("La ville a été supprimée !");
-	        } else {
-	            return ResponseEntity.notFound().build();
-	        }
+	    @GetMapping("/departement/{codeDepartement}/population/{min}")
+	    public List<Ville> getVillesByDepartementAndMinPopulation(@PathVariable String codeDepartement, @PathVariable int minPopulation) {
+	        return villeRepository.findByCodeDepartementAndPopulationGreaterThan(codeDepartement, minPopulation);
 	    }
+
+	    @GetMapping("/departement/{codeDepartement}/population/{min}/{max}")
+	    public List<Ville> getVillesByDepartementAndPopulationRange(@PathVariable String codeDepartement, @PathVariable int min, @PathVariable int max) {
+	        return villeRepository.findByCodeDepartementAndPopulationBetween(codeDepartement, min, max);
+	    }
+
+	    @GetMapping("/departement/{codeDepartement}/top/{n}")
+	    public List<Ville> getTopNVillesByDepartement(@PathVariable String codeDepartement, @PathVariable int n) {
+	        return villeRepository.findTopNByCodeDepartementOrderByPopulationDesc(codeDepartement, n);
+	    }
+	    
 }

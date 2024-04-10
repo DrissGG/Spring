@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.diginamic.digiHello2.model.Departement;
+import com.diginamic.digiHello2.repository.DepartementRepository;
 
 @Service
 public class DepartementService {

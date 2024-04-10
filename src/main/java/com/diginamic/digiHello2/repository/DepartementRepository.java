@@ -1,4 +1,4 @@
-package com.diginamic.digiHello2.service;
+package com.diginamic.digiHello2.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
