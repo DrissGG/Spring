@@ -1,11 +1,17 @@
 package com.diginamic.digiHello2.model;
 
+
+
+
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Ville {
@@ -18,8 +24,8 @@ public class Ville {
 	/** population totale */
 	private int population;
 	  
-	private String codeDepartement;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
+	@NotNull
 	@JoinColumn(name = "departement_id")
 	private Departement departement;
 	
@@ -28,12 +34,11 @@ public class Ville {
 	}	
 	
 
-	public Ville(int id, String nom, int population, String codeDepartement) {
+	public Ville(String nom, int population, Departement departement) {
 		super();
-		this.id = id;
 		this.nom = nom;
 		this.population = population;
-		this.codeDepartement = codeDepartement;
+		this.departement = departement;
 	}
 
 	public String getNom() {
@@ -59,12 +64,7 @@ public class Ville {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getCodeDepartement() {
-		return codeDepartement;
-	}
-	public void setCodeDepartement(String codeDepartement) {
-		this.codeDepartement = codeDepartement;
-	}
+	
 
 
 	public Departement getDepartement() {

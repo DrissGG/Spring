@@ -1,6 +1,9 @@
 package com.diginamic.digiHello2.model;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +13,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity
-public class Departement {
+public class Departement {	
+
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,8 +22,21 @@ public class Departement {
     private String code;
 
     private String nom;
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "departement")
-    private List<Ville> villes;
+    private List<Ville> villes = new ArrayList<>();
+    
+    public Departement() {
+		super();
+	}
+    
+    public Departement(String code, String nom) {
+		super();
+		
+		this.code = code;
+		this.nom = nom;
+	}
 
 	public Long getId() {
 		return id;

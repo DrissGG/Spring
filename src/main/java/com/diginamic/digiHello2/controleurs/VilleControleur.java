@@ -3,9 +3,12 @@ package com.diginamic.digiHello2.controleurs;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,57 +23,55 @@ public class VilleControleur {
 	@Autowired
 	private VilleService villeService;
 	@Autowired
-    private VilleRepository villeRepository;
-	
-	@GetMapping("/villes")
-	public List<Ville> getVilles() {			
-		//return villeService.extractVilles();		
+	private VilleRepository villeRepository;
+
+	@GetMapping("/")
+	public List<Ville> getVilles() {
+		// return villeService.extractVilles();
 		return villeRepository.findAll();
 	}
-	
+
 	@GetMapping("/villes/{id}")
-	public ResponseEntity<Ville> getVilleId(@PathVariable int id) {		
+	public ResponseEntity<Ville> getVilleId(@PathVariable int id) {
 		Ville v = villeService.extractVille(id);
-		if(v != null) {
+		if (v != null) {
 			return ResponseEntity.ok(v);
-		}else {				
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	 
-	 @GetMapping("/nom/{nom}")
-	 public List<Ville> getVillesByNom(@PathVariable String nom) {
-		 return villeRepository.findByNomStartingWith(nom);
-	 }
-	 
-	 @GetMapping("/population/{min}")
-	 public List<Ville> getVillesByPopulationGreaterThan(@PathVariable int min) {
-		 return villeRepository.findByPopulationGreaterThan(min);
-	 }
-	 
-	 @GetMapping("/population/{min}/{max}")
-	    public List<Ville> getVillesByPopulationRange(@PathVariable int min, @PathVariable int max) {
-	        return villeRepository.findByPopulationBetween(min, max);
-	    }
 
-	    @GetMapping("/departement/{codeDepartement}")
-	    public List<Ville> getVillesByDepartement(@PathVariable String codeDepartement) {
-	        return villeRepository.findByCodeDepartement(codeDepartement);
-	    }
+	@GetMapping("/nom/{nom}")
+	public List<Ville> getVillesByNom(@PathVariable String nom) {
+		return villeRepository.findByNomStartingWith(nom);
+	}
 
-	    @GetMapping("/departement/{codeDepartement}/population/{min}")
-	    public List<Ville> getVillesByDepartementAndMinPopulation(@PathVariable String codeDepartement, @PathVariable int minPopulation) {
-	        return villeRepository.findByCodeDepartementAndPopulationGreaterThan(codeDepartement, minPopulation);
-	    }
+	@GetMapping("/population/{min}")
+	public List<Ville> getVillesByPopulationGreaterThan(@PathVariable int min) {
+		return villeRepository.findByPopulationGreaterThan(min);
+	}
 
-	    @GetMapping("/departement/{codeDepartement}/population/{min}/{max}")
-	    public List<Ville> getVillesByDepartementAndPopulationRange(@PathVariable String codeDepartement, @PathVariable int min, @PathVariable int max) {
-	        return villeRepository.findByCodeDepartementAndPopulationBetween(codeDepartement, min, max);
-	    }
+	@GetMapping("/population/{min}/{max}")
+	public List<Ville> getVillesByPopulationRange(@PathVariable int min, @PathVariable int max) {
+		return villeRepository.findByPopulationBetween(min, max);
+	}
 
-	    @GetMapping("/departement/{codeDepartement}/top/{n}")
-	    public List<Ville> getTopNVillesByDepartement(@PathVariable String codeDepartement, @PathVariable int n) {
-	        return villeRepository.findTopNByCodeDepartementOrderByPopulationDesc(codeDepartement, n);
-	    }
-	    
+	@GetMapping("/departement/{departementCode}")
+	public List<Ville> getVillesByDepartement(@PathVariable String departementCode) {
+		return villeRepository.findByDepartement_Code(departementCode);
+	}
+
+	@GetMapping("/departement/{departementCode}/population/{min}/{max}")
+	public List<Ville> getVillesByDepartementAndPopulationRange(@PathVariable String departementCode,
+			@PathVariable int min, @PathVariable int max) {
+		Page<Ville> page = villeRepository.findNByDepartement_CodeOrderByPopulationDesc(departementCode,
+				Pageable.ofSize(max - min + 1));
+		return page.getContent();
+	}
+
+	@PostMapping("/init")
+	public ResponseEntity<String> initializeData() {
+		villeService.init();
+		return ResponseEntity.ok("Data initialized successfully");
+	}
 }
