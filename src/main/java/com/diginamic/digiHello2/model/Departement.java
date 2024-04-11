@@ -21,7 +21,7 @@ public class Departement {
 	@Column(unique = true)
     private String code;
 
-    private String nom;
+    private String nom; 
     
     @JsonIgnore
     @OneToMany(mappedBy = "departement")

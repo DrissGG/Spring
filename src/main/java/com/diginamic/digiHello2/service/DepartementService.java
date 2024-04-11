@@ -1,10 +1,13 @@
 package com.diginamic.digiHello2.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.diginamic.digiHello2.dto.DepartementDto;
+import com.diginamic.digiHello2.mapper.DepartementMapper;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.repository.DepartementRepository;
 
@@ -15,34 +18,43 @@ public class DepartementService {
     private DepartementRepository departementRepository;
 
     // Méthode pour extraire tous les départements
-    public List<Departement> extractDepartements() {
-        return departementRepository.findAll();
+    public List<DepartementDto> extractDepartements() {
+        List<Departement> departements = departementRepository.findAll();
+        return departements.stream().map(DepartementMapper::toDto).collect(Collectors.toList());
     }
 
     // Méthode pour extraire un département par son ID
-    public Departement extractDepartement(Long id) {
-        return departementRepository.findById(id).orElse(null);
+    public DepartementDto extractDepartement(Long id) {
+        Departement departement = departementRepository.findById(id).orElse(null);
+        if (departement != null) {
+            return DepartementMapper.toDto(departement);
+        }
+        return null;
     }
 
-    // Méthode pour insérer un nouveau département
-    public Departement insertDepartement(Departement departement) {
+    public Departement insertDepartement(DepartementDto departementDto) {
+    	Departement departement = new Departement();
+        departement.setNom(departementDto.getNomDepartement());
+        departement.setCode(departementDto.getCodeDepartement());
+     
         return departementRepository.save(departement);
     }
 
-    // Méthode pour modifier un département existant
-    public Departement modifyDepartement(Long id, Departement newDepartement) {
+    public Departement modifyDepartement(Long id, DepartementDto departementDto) {
         Departement existingDepartement = departementRepository.findById(id).orElse(null);
         if (existingDepartement != null) {
-            // Modifier les attributs du département existant avec les valeurs du nouveau département
-            existingDepartement.setNom(newDepartement.getNom());
-            // Vous pouvez ajouter d'autres attributs ici selon votre modèle de données
+            existingDepartement.setNom(departementDto.getNomDepartement());
+            existingDepartement.setCode(departementDto.getCodeDepartement());
             return departementRepository.save(existingDepartement);
         }
         return null;
     }
 
-    // Méthode pour supprimer un département par son ID
-    public void deleteDepartement(Long id) {
-        departementRepository.deleteById(id);
+    public boolean deleteDepartement(Long id) {
+        if (departementRepository.existsById(id)) {
+            departementRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

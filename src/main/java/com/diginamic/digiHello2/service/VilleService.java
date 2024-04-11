@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.diginamic.digiHello2.mapper.DepartementMapper;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.model.Ville;
-import com.diginamic.digiHello2.repository.DepartementRepository;
 import com.diginamic.digiHello2.repository.VilleRepository;
 
 import jakarta.transaction.Transactional;
@@ -63,17 +63,18 @@ public class VilleService {
 	    Departement d9 = new Departement("59", "Nord");
 	    Departement d10 = new Departement("83", "Var");
 
-	    // Sauvegarde des départements
-	    depService.insertDepartement(d1);
-	    depService.insertDepartement(d2);
-	    depService.insertDepartement(d3);
-	    depService.insertDepartement(d4);
-	    depService.insertDepartement(d5);
-	    depService.insertDepartement(d6);
-	    depService.insertDepartement(d7);
-	    depService.insertDepartement(d8);
-	    depService.insertDepartement(d9);
-	    depService.insertDepartement(d10);
+//	    // Sauvegarde des départements
+//	    depService.insertDepartement(DepartementMapper.toDto(d1));
+//	    depService.insertDepartement(DepartementMapper.toDto(d2));
+//	    depService.insertDepartement(DepartementMapper.toDto(d3));
+//	    depService.insertDepartement(DepartementMapper.toDto(d4));
+//	    depService.insertDepartement(DepartementMapper.toDto(d5));
+//	    depService.insertDepartement(DepartementMapper.toDto(d6));
+//	    depService.insertDepartement(DepartementMapper.toDto(d7));
+//	    depService.insertDepartement(DepartementMapper.toDto(d8));
+//	    depService.insertDepartement(DepartementMapper.toDto(d9));
+//	    depService.insertDepartement(DepartementMapper.toDto(d10));
+
 
 	    // Ajout de 20 villes
 	    Ville v1 = new Ville("Montpellier", 13333, d1);
