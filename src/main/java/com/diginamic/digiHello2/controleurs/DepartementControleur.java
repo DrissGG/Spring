@@ -1,8 +1,10 @@
 package com.diginamic.digiHello2.controleurs;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +74,23 @@ public class DepartementControleur {
             return ResponseEntity.ok("Département supprimé avec succès.");
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @GetMapping("/export")
+    public ResponseEntity<byte[]> exportToCsv() {
+        try {
+            List<DepartementDto> departements = departementService.extractDepartements();
+            byte[] csvData = departementService.exportToCsv(departements);
+
+            // Retourne le fichier CSV en tant que réponse avec un code de statut OK
+            return ResponseEntity
+                    .ok()
+                    .header("Content-Disposition", "attachment; filename=departements.csv")
+                    .body(csvData);
+        } catch (IOException e) {
+            // En cas d'erreur lors de la génération du fichier CSV, retourne une réponse avec un code d'erreur interne du serveur
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 }

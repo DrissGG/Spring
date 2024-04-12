@@ -1,8 +1,13 @@
 package com.diginamic.digiHello2.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +15,8 @@ import com.diginamic.digiHello2.dto.DepartementDto;
 import com.diginamic.digiHello2.mapper.DepartementMapper;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.repository.DepartementRepository;
+
+import jakarta.transaction.Transactional;
 
 @Service
 public class DepartementService {
@@ -57,4 +64,18 @@ public class DepartementService {
         }
         return false;
     }
+    
+    @Transactional
+    public byte[] exportToCsv(List<DepartementDto> departements) throws IOException {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+             CSVPrinter csvPrinter = new CSVPrinter(new OutputStreamWriter(out), CSVFormat.DEFAULT.withHeader("Code département", "Nom du département"))) {
+
+            for (DepartementDto departementDto : departements) {
+                csvPrinter.printRecord(departementDto.getCodeDepartement(), departementDto.getNomDepartement());
+            }
+
+            csvPrinter.flush();
+            return out.toByteArray();
+        }
+        }
 }
