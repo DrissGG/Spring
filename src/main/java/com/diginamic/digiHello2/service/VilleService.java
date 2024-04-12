@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.diginamic.digiHello2.mapper.DepartementMapper;
+import com.diginamic.digiHello2.exception.VilleExistsException;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.model.Ville;
 import com.diginamic.digiHello2.repository.VilleRepository;
@@ -30,20 +30,61 @@ public class VilleService {
 	public Ville extractVille(String nom) {
 		return villeRepository.findByNom(nom);
 	}
-	public List<Ville> insertVille(Ville ville){
+	public Ville insertVille(Ville ville) throws VilleExistsException{
+		
+		 // La ville doit avoir au moins 10 habitants
+		 if(ville.getPopulation() < 10) {
+			 throw new VilleExistsException("La ville doit avoir au moins 10 habitants.");
+		 }
+		 
+		// Vérifier si le nom de la ville contient au moins 2 lettres
+		 if (ville.getNom().length() < 2) {
+			 throw new VilleExistsException("Le nom de la ville doit contenir au moins 2 lettres.");
+	     }
+		 //Le code département doit obligatoire 2 caractères
+		 if(ville.getDepartement().getCode().length() !=2){
+			 throw new VilleExistsException("Le code département doit obligatoire avoir 2 caractères");
+	     }	
+		 if (villeRepository.findByNomAndDepartementCode(ville.getNom(), ville.getDepartement().getCode()) != null) {
+	            throw new VilleExistsException("La ville existe déjà pour ce département.");
+	      }
+		 
 		villeRepository.save(ville);
-		return extractVilles();
+		return ville;
 	}
-	public List<Ville> modifierVille(int idVille, Ville villeModifiee) {
+	
+	public Ville modifierVille(int idVille, Ville villeModifiee) throws VilleExistsException {
 		 Ville v = villeRepository.findById(idVille).orElse(null);
 		 if(v != null) {
+			  // La ville doit avoir au moins 10 habitants
+		        if (villeModifiee.getPopulation() < 10) {
+		            throw new VilleExistsException("La ville doit avoir au moins 10 habitants.");
+		        }
+
+		        // Vérifier si le nom de la ville contient au moins 2 lettres
+		        if (villeModifiee.getNom().length() < 2) {
+		            throw new VilleExistsException("Le nom de la ville doit contenir au moins 2 lettres.");
+		        }
+
+		        // Le code département doit obligatoirement avoir 2 caractères
+		        if (villeModifiee.getDepartement().getCode().length() != 2) {
+		            throw new VilleExistsException("Le code département doit obligatoirement avoir 2 caractères");
+		        }
+
+		        // Vérifier si le nom de la ville est unique pour le département
+		        Ville existingVilleWithSameName = villeRepository.findByNomAndDepartementCode(villeModifiee.getNom(), villeModifiee.getDepartement().getCode());
+		        if (existingVilleWithSameName != null && existingVilleWithSameName.getId() != idVille) {
+		            throw new VilleExistsException("La ville existe déjà pour ce département.");
+		        }
+			 
 			 v.setNom(villeModifiee.getNom());
 			 v.setPopulation(villeModifiee.getPopulation());
 			 v.setDepartement(villeModifiee.getDepartement());
 			 villeRepository.save(v);
 		 }
-		 return extractVilles();
+		 return v;
 	 }
+	
 	public List<Ville> supprimerVille(int idVille){
 		villeRepository.deleteById(idVille);
 		return extractVilles();

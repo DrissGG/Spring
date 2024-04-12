@@ -2,17 +2,17 @@ package com.diginamic.digiHello2.dto;
 
 public class VilleDto {
 	
-	private String codeVille;
+	private String nomVille;
     private int nombreHabitants;
     private String codeDepartement;
     private String nomDepartement;
     
     
-	public String getCodeVille() {
-		return codeVille;
+	public String getnomVille() {
+		return nomVille;
 	}
-	public void setCodeVille(String codeVille) {
-		this.codeVille = codeVille;
+	public void setnomVille(String nomVille) {
+		this.nomVille = nomVille;
 	}
 	public int getNombreHabitants() {
 		return nombreHabitants;

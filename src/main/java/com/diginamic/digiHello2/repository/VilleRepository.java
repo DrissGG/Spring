@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.model.Ville;
 
 @Repository
@@ -35,5 +36,8 @@ public interface VilleRepository extends JpaRepository<Ville, Integer> {
     List<Ville> findByPopulationBetween(int minPopulation, int maxPopulation);
 
     Page<Ville> findNByDepartement_CodeOrderByPopulationDesc(String code, Pageable pageable);
+    
+    Ville findByNomAndDepartementCode(String nom, String departementCode);
+   
     
 }

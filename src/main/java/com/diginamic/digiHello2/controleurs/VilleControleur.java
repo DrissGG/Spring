@@ -9,9 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diginamic.digiHello2.dto.VilleDto;
+import com.diginamic.digiHello2.exception.VilleExistsException;
+import com.diginamic.digiHello2.mapper.VilleMapper;
 import com.diginamic.digiHello2.model.Ville;
 import com.diginamic.digiHello2.repository.VilleRepository;
 import com.diginamic.digiHello2.service.VilleService;
@@ -31,7 +35,7 @@ public class VilleControleur {
 		return villeRepository.findAll();
 	}
 
-	@GetMapping("/villes/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Ville> getVilleId(@PathVariable int id) {
 		Ville v = villeService.extractVille(id);
 		if (v != null) {
@@ -73,5 +77,12 @@ public class VilleControleur {
 	public ResponseEntity<String> initializeData() {
 		villeService.init();
 		return ResponseEntity.ok("Data initialized successfully");
+	}
+	@PostMapping("")
+	public ResponseEntity<Ville> insertVille(@RequestBody VilleDto vdto) throws VilleExistsException {
+		Ville v = VilleMapper.toBean(vdto);
+		Ville ville = villeService.insertVille(v);
+		return ResponseEntity.ok(ville);
+		
 	}
 }
