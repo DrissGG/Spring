@@ -45,6 +45,12 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-csv</artifactId>
+			<version>1.8</version> <!-- Ou la dernière version disponible -->
+		</dependency>
+
 		
 	</dependencies>
 

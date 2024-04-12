@@ -1,7 +1,12 @@
 package com.diginamic.digiHello2.service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.List;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -161,6 +166,19 @@ public class VilleService {
 	    villeRepository.save(v19);
 	    villeRepository.save(v20);
 	}
+	
+	 public byte[] exportToCsv(List<Ville> villes) throws IOException {
+	        try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+	             CSVPrinter csvPrinter = new CSVPrinter(new OutputStreamWriter(out), CSVFormat.DEFAULT.withHeader("Nom", "Nombre d'habitants", "Code département", "Nom du département"))) {
 
+	            for (Ville ville : villes) {
+	                csvPrinter.printRecord(ville.getNom(), ville.getPopulation(), ville.getDepartement().getCode(), ville.getDepartement().getNom());
+	            }
+
+	            csvPrinter.flush();
+	            return out.toByteArray();
+	        }
+	        }
+	
 
 }
