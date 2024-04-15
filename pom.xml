@@ -50,6 +50,22 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.8</version> <!-- Ou la dernière version disponible -->
 		</dependency>
+		
+    <!-- Spring Boot Starter Test pour Spring Test et Mockito -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+    <!-- H2 Database pour la base de données en mémoire -->
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>test</scope>
+    </dependency>
+
+
 
 		
 	</dependencies>

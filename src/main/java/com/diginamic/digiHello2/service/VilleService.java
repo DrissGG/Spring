@@ -17,8 +17,10 @@ import com.diginamic.digiHello2.repository.VilleRepository;
 
 import jakarta.transaction.Transactional;
 
+
 @Service
 public class VilleService {
+	
 	@Autowired
     private VilleRepository villeRepository;
 	
