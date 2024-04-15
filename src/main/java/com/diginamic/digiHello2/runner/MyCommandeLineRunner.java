@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.diginamic.digiHello2.DigiHello2Application;
 import com.diginamic.digiHello2.dto.DepartementDto;
+import com.diginamic.digiHello2.dto.VilleDto;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.service.DepartementService;
 import com.diginamic.digiHello2.service.VilleService;
@@ -52,12 +53,19 @@ public class MyCommandeLineRunner implements CommandLineRunner{
                 
                 departementdto.setNomDepartement(departmentName);
                 departementdto.setCodeDepartement(departmentCode);
-                
+                               
                 DepartementDto departement = departementService.extractDepartementByCode(departmentCode);
                 if (departement == null) {
                 	departement = new DepartementDto(departmentCode,departmentName);
                 	departementService.insertDepartement(departement);
                 }
+//                VilleDto villedto = new VilleDto();
+//                
+//               villedto.setCodeDepartement(departmentCode);
+//               villedto.setNomDepartement(departmentName);
+//               villedto.setnomVille(cityName);
+//               villedto.setNombreHabitants(100);
+//               villeService.insertVille(villedto);                
                     
                 
                 

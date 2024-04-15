@@ -9,7 +9,7 @@ public class DepartementMapper {
         DepartementDto departementDto = new DepartementDto();
         departementDto.setCodeDepartement(departement.getCode());
         departementDto.setNomDepartement(departement.getNom());
-        departementDto.setNombreHabitants(departement.getVilles().stream().mapToInt(Ville::getPopulation).sum());
+//        departementDto.setNombreHabitants(departement.getVilles().stream().mapToInt(Ville::getPopulation).sum());
         return departementDto;
     }
 }

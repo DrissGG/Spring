@@ -43,23 +43,13 @@ public class DepartementService {
         return null;
     }
     public DepartementDto extractDepartementByCode(String code) {
-        Departement departement = departementRepository.findByDepartementByCode(code);
+        Departement departement = departementRepository.findByCode(code);
         if (departement != null) {
             return DepartementMapper.toDto(departement);
         }
         return null;
     }
     
-//    public DepartementDto extractDepartementByCode(String code) {
-//        String query = "SELECT * FROM departement WHERE code = ?";
-//        Query nativeQuery = em.createNativeQuery(query, Departement.class);
-//        nativeQuery.setParameter(1, code);
-//        Departement departement = (Departement) nativeQuery.getSingleResult();
-//        if (departement != null) {
-//            return DepartementMapper.toDto(departement);
-//        }
-//        return null;
-//    }
 
    
 

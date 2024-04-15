@@ -18,19 +18,20 @@ public class VilleMapper {
 
 	public static Ville toBean(VilleDto vdto) {
 		Ville v = new Ville();
-		Departement d = new Departement();
+		DepartementDto d = new DepartementDto();
 		
 		 // Mapping des attributs communs
 	    v.setNom(vdto.getnomVille());
 	    v.setPopulation(vdto.getNombreHabitants());
 
 	    // Mapping des attributs du département
-	    d.setCode(vdto.getCodeDepartement());
-	    d.setNom(vdto.getNomDepartement());
-	    // Vous pouvez mapper d'autres attributs du département si nécessaire
-
+	    d.setCodeDepartement(vdto.getCodeDepartement());
+	    d.setNomDepartement(vdto.getNomDepartement());
+	    
+	    Departement dd = toBean(d);
+	    
 	    // Attribution du département à la ville
-	    v.setDepartement(d);
+	    v.setDepartement(dd);
 	    
 	    return v;
 
