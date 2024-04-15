@@ -16,11 +16,15 @@ import com.diginamic.digiHello2.mapper.DepartementMapper;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.repository.DepartementRepository;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Service
 public class DepartementService {
-
+	@PersistenceContext
+    private EntityManager em;
     @Autowired
     private DepartementRepository departementRepository;
 
@@ -38,6 +42,26 @@ public class DepartementService {
         }
         return null;
     }
+    public DepartementDto extractDepartementByCode(String code) {
+        Departement departement = departementRepository.findByDepartementByCode(code);
+        if (departement != null) {
+            return DepartementMapper.toDto(departement);
+        }
+        return null;
+    }
+    
+//    public DepartementDto extractDepartementByCode(String code) {
+//        String query = "SELECT * FROM departement WHERE code = ?";
+//        Query nativeQuery = em.createNativeQuery(query, Departement.class);
+//        nativeQuery.setParameter(1, code);
+//        Departement departement = (Departement) nativeQuery.getSingleResult();
+//        if (departement != null) {
+//            return DepartementMapper.toDto(departement);
+//        }
+//        return null;
+//    }
+
+   
 
     public Departement insertDepartement(DepartementDto departementDto) {
     	Departement departement = new Departement();

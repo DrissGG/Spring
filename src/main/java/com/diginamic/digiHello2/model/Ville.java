@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
+
 public class Ville {
 
 	@Id

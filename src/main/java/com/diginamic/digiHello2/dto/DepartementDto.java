@@ -1,10 +1,20 @@
 package com.diginamic.digiHello2.dto;
 
 public class DepartementDto {
-	 private String codeDepartement;
+	
+	public DepartementDto() {
+		super();
+	}
+	private String codeDepartement;
 	 private String nomDepartement;
 	 private int nombreHabitants;
 	 
+	 public DepartementDto(String codeDepartement, String nomDepartement) {
+			super();
+			this.codeDepartement = codeDepartement;
+			this.nomDepartement = nomDepartement;
+		}
+	   
 	 
 	public String getCodeDepartement() {
 		return codeDepartement;
