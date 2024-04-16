@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des villes</title>
+</head>
+<body>
+    <h1>Liste des villes avec départements</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nom Ville</th>
+                <th>Nom Département</th>
+                <th>Code Département</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ville : ${villes}">
+                <td th:text="${ville.nom}">Nom Ville</td>
+                <td th:text="${ville.departement.nom}">Nom Département</td>
+                <td th:text="${ville.departement.code}">Code Département</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

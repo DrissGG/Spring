@@ -25,7 +25,7 @@ public class Ville {
 	/** population totale */
 	private int population;
 	  
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@NotNull
 	@JoinColumn(name = "departement_id")
 	private Departement departement;

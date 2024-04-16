@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.diginamic.digiHello2.exception.VilleExistsException;
 import com.diginamic.digiHello2.model.Departement;
 import com.diginamic.digiHello2.model.Ville;
+import com.diginamic.digiHello2.repository.DepartementRepository;
 import com.diginamic.digiHello2.repository.VilleRepository;
 
 import jakarta.transaction.Transactional;
@@ -26,7 +27,10 @@ public class VilleService {
 	
 	@Autowired
 	private DepartementService depService;
-
+	
+	@Autowired
+	private DepartementRepository departementRepository;
+	
 	
 	public List<Ville> extractVilles(){
 		return villeRepository.findAll();
@@ -55,7 +59,10 @@ public class VilleService {
 		 if (villeRepository.findByNomAndDepartementCode(ville.getNom(), ville.getDepartement().getCode()) != null) {
 	            throw new VilleExistsException("La ville existe déjà pour ce département.");
 	      }
-		 
+		 Departement d  = departementRepository.findByCode(ville.getDepartement().getCode());
+		 if(d !=null) {
+			 ville.setDepartement(d);
+		 }
 		villeRepository.save(ville);
 		return ville;
 	}
