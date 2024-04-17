@@ -6,7 +6,12 @@
 </head>
 
 <body>
-    <h1>Les VILLES </h1>
+    <h1>Profil utilisateur :</h1>
+    <ul>
+		<li th:text="'Username : ' +${username}"></li>
+		<li th:text="'Authorities : ' +${authorities}"></li>
+	</ul>
+    <h3>Les VILLES </h3>
     <a th:href="@{/villes}">Listes des villes</a>
     
 </body>
