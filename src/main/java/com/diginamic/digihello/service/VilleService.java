@@ -105,16 +105,22 @@ public class VilleService {
 		return extractVilles();
 	}
 	
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public boolean deleteVilles(int id) {
+//		Ville result = villeRepository.findById(id).get();
+//		if(result!=null) {
+//			villeRepository.deleteById(id);
+//			return true;
+//		}else {
+//			return false;
+//		}
+//	}
+	
 	@PreAuthorize("hasRole('ADMIN')")
-	public boolean deleteVilles(int id) {
-		Ville result = villeRepository.findById(id).get();
-		if(result!=null) {
-			villeRepository.deleteById(id);
-			return true;
-		}else {
-			return false;
-		}
+	public void deleteVille(int idVille) {
+	    villeRepository.deleteById(idVille);
 	}
+
 	
 	@Transactional
 	public void init() {

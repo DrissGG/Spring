@@ -48,7 +48,8 @@ public class SecurityConfig {
 	SecurityFilterChain configureSecurity(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests()
 		.requestMatchers("login").permitAll() //permet l'accès au login a tous
-		.requestMatchers("/", "/index", "/deleted").authenticated()
+		.requestMatchers("/", "/index", "/deleteVilles").authenticated()
+		.requestMatchers("/admin").hasRole("ADMIN")
 		.requestMatchers("/", "/index").authenticated()
 		.requestMatchers(HttpMethod.GET, "/villes/**").authenticated()
 		.requestMatchers("/admin").hasRole("ADMIN")
