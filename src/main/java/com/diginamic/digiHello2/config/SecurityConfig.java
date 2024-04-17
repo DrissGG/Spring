@@ -17,13 +17,13 @@ public class SecurityConfig {
 		userDetailsManager.createUser(
 				User.withDefaultPasswordEncoder()
 				.username("user")
-				.password("password")
+				.password("user")
 				.roles("USER")
 				.build());
 		userDetailsManager.createUser(
 				User.withDefaultPasswordEncoder()
 				.username("admin")
-				.password("password")
+				.password("admin")
 				.roles("ADMIN")
 				.build());
 		
