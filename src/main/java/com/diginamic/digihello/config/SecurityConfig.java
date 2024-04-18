@@ -14,7 +14,6 @@ import com.diginamic.digihello.repository.UserAccountRepository;
 import com.diginamic.digihello.repository.VilleRepository;
 
 @Configuration
-
 public class SecurityConfig {
 	@Autowired
 	VilleRepository villeRepository;
@@ -31,7 +30,7 @@ public class SecurityConfig {
 		.requestMatchers("/", "/index").authenticated()
 		.requestMatchers(HttpMethod.GET, "/villes/**").authenticated()		
 		.requestMatchers(HttpMethod.POST, "/villes/**").hasRole("ADMIN")
-		.requestMatchers("/supprimerVille").hasRole("ADMIN") // Autorise seulement les utilisateurs avec le rôle ADMIN à accéder à cet endpoint
+		.requestMatchers("/villes/supprimerVille").hasRole("ADMIN") // Autorise seulement les utilisateurs avec le rôle ADMIN à accéder à cet endpoint
         .requestMatchers("/admin").hasRole("ADMIN")
 		.anyRequest().denyAll() //tout le reste est sécurise 
 		)

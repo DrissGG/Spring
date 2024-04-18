@@ -100,8 +100,8 @@ public class VilleService {
 		 return v;
 	 }
 	
-	public List<Ville> supprimerVille(int idVille){
-		villeRepository.deleteById(idVille);
+	public List<Ville> supprimerVille(int id){
+		villeRepository.deleteById(id);
 		return extractVilles();
 	}
 	

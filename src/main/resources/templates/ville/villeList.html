@@ -12,19 +12,27 @@
                 <th>Nom Ville</th>
                 <th>Nom Département</th>
                 <th>Code Département</th>
+                <th>Action</th>
             </tr>
         </thead>
+        
         <tbody>
             <tr th:each="ville : ${villes}">
                 <td th:text="${ville.nom}">Nom Ville</td>
                 <td th:text="${ville.departement.nom}">Nom Département</td>
                 <td th:text="${ville.departement.code}">Code Département</td>
                 
-               <td th:if="${authorities.contains('ROLE_ADMIN')}">
+            <!--   <td th:if="${#lists.contains(authorities, 'ROLE_ADMIN')}"> 
+				    <td th:if="${#authorization.expression('hasRole('ROLE_ADMIN')')}">
+						-->
+						
+
+				   <td th:if="${authorities.contains('ROLE_ADMIN')}" >
                     <form th:action="@{'/villes/supprimerVille/'+ ${ville.id}}" method="post">
                         <button type="submit">Supprimer</button>
                     </form>
                 </td>
+                
                 
             </tr> 
         </tbody>
