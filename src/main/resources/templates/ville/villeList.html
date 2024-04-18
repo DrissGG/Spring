@@ -20,7 +20,13 @@
                 <td th:text="${ville.departement.nom}">Nom Département</td>
                 <td th:text="${ville.departement.code}">Code Département</td>
                 
-            </tr>
+               <td th:if="${authorities.contains('ROLE_ADMIN')}">
+                    <form th:action="@{'/villes/supprimerVille/'+ ${ville.id}}" method="post">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
+                
+            </tr> 
         </tbody>
     </table>
 </body>

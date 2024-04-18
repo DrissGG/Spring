@@ -88,11 +88,7 @@ public class VilleControleur {
 		return ResponseEntity.ok(ville);
 		
 	}
-	 @DeleteMapping("/deleteVilles/{idVille}")
-	    public ResponseEntity<?> deleteVilles(@PathVariable int idVille) {
-	        villeService.supprimerVille(idVille);
-	        return ResponseEntity.ok().build();
-	    }
+	 
 	
 	 @GetMapping("/export")
 	    public ResponseEntity<byte[]> exportToCsv() {

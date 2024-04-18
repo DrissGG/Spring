@@ -99,7 +99,7 @@ public class VilleService {
 		 }
 		 return v;
 	 }
-	@PreAuthorize("hasRole('ADMIN')")
+	
 	public List<Ville> supprimerVille(int idVille){
 		villeRepository.deleteById(idVille);
 		return extractVilles();
@@ -116,10 +116,7 @@ public class VilleService {
 //		}
 //	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
-	public void deleteVille(int idVille) {
-	    villeRepository.deleteById(idVille);
-	}
+
 
 	
 	@Transactional
@@ -135,6 +132,16 @@ public class VilleService {
 	    Departement d8 = new Departement("06", "Alpes-Maritimes");
 	    Departement d9 = new Departement("59", "Nord");
 	    Departement d10 = new Departement("83", "Var");
+	    departementRepository.save(d1);
+	    departementRepository.save(d2);
+	    departementRepository.save(d3);
+	    departementRepository.save(d4);
+	    departementRepository.save(d5);
+	    departementRepository.save(d6);
+	    departementRepository.save(d7);
+	    departementRepository.save(d8);
+	    departementRepository.save(d9);
+	    departementRepository.save(d10);
 
 //	    // Sauvegarde des départements
 //	    depService.insertDepartement(DepartementMapper.toDto(d1));

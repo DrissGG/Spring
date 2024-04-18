@@ -45,13 +45,16 @@ public class MyCommandeLineRunner implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-//		UserAccount userAccount = new UserAccount("naruto", "naruto", "USER");
-//		UserAccount userAccount2 = new UserAccount("sisi", "sisi", "USER");
-//		UserAccount userAccount3 = new UserAccount("luffy", "luffy", "ADMIN");
-//		
-//		userAccountRepository.save(userAccount);
-//		userAccountRepository.save(userAccount2);
-//		userAccountRepository.save(userAccount3);
+		UserAccount userAccount = new UserAccount("user", "user", "ROLE_USER");
+		UserAccount userAccount2 = new UserAccount("admin", "admin", "ROLE_ADMIN");
+		UserAccount userAccount3 = new UserAccount("luffy", "luffy", "ROLE_ADMIN");
+		
+		
+		userAccountRepository.save(userAccount);
+		userAccountRepository.save(userAccount2);
+		userAccountRepository.save(userAccount3);
+		
+		villeService.init();
 		
 		System.out.println("OK");
 		
