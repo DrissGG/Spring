@@ -2,19 +2,30 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Index Page</title>
+	<title>Index Page</title>
 </head>
 
 <body>
-    <h1>Profil utilisateur :</h1>
-    <ul>
+	<h1>Profil utilisateur :</h1>
+	<ul>
 		<li th:text="'Username : ' +${username}"></li>
 		<li th:text="'Authorities : ' +${authorities}"></li>
 	</ul>
-    <h3>Les VILLES </h3>    
-    <a th:href="@{/villes}">Listes des villes</a>
-    
-    
+	<h3>Les VILLES </h3>
+	<a th:href="@{/villes}">Listes des villes</a>
+
+	<div>
+		<ul>
+			<li>
+				<a href="/login">Connexion</a>
+			</li>
+			<li>
+				<a href="/inscription">Inscription</a>
+			</li>
+
+		</ul>
+	</div>
+
 </body>
 
 </html>
