@@ -17,6 +17,7 @@ import com.diginamic.digihello.repository.VilleRepository;
 public class SecurityConfig {
 	@Autowired
 	VilleRepository villeRepository;
+	
 	@Bean
 	UserDetailsService userDetailsService(UserAccountRepository userAccountRepository)
 	{
@@ -26,7 +27,7 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain configureSecurity(HttpSecurity http) throws Exception{
 		http.authorizeHttpRequests(request -> request
-		.requestMatchers("login").permitAll() //permet l'accès au login a tous
+		.requestMatchers("login", "/login/oauth2/code/google").permitAll() //permet l'accès au login a tous
 		.requestMatchers("/", "/index").authenticated()
 		.requestMatchers(HttpMethod.GET, "/villes/**").authenticated()		
 		.requestMatchers(HttpMethod.POST, "/villes/**").hasRole("ADMIN")
@@ -35,6 +36,7 @@ public class SecurityConfig {
 		.anyRequest().denyAll() //tout le reste est sécurise 
 		)
 		.httpBasic(Customizer.withDefaults())
+		.oauth2Login(Customizer.withDefaults())
 		.formLogin(Customizer.withDefaults());
 		return http.build();			
 	}
